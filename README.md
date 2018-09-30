@@ -103,8 +103,8 @@ command-line mode, whereas the opposite is true when not operating in
 command line mode. In the steps below, we write this file the delete it.
 
 cd ldpc
-echo " " > py/__init__.py
 
+echo " " > py/__init__.py
 python
 
 \>>> import py.ldpc as ldpc
