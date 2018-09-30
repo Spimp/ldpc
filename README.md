@@ -102,14 +102,19 @@ file __init.py__ in order to be able to load a library from it in
 command-line mode, whereas the opposite is true when not operating in 
 command line mode. In the steps below, we write this file the delete it.
 
-
 cd ldpc
 echo " " > py/__init__.py
+
 python
+
 \>>> import py.ldpc as ldpc
+
 import numpy as np
+
 c = ldpc.code()
+
 c.standard
+
 '802.11n'
 u = np.random.randint(0,2,c.K)
 x = c.encode(u)
