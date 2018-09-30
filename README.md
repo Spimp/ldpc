@@ -49,9 +49,9 @@ C executables are in subdirectory `bin/`
 Python scripts classes and functions are in subdirectory `py/`
 Results and data are in subdirectory `data/`
 
-Compile the C code before first use:
-`gcc -lm -shared -fPIC -o bin/c_ldpc.so src/c_ldpc.c`  
-`gcc -o bin/results2csv src/results2csv.c`
+Compile the C code before first use:  
+`gcc -lm -shared -fPIC -o bin/c_ldpc.so src/c_ldpc.c  
+gcc -o bin/results2csv src/results2csv.c`
 
 (the first of these needs to be done before decoders can be used!!)
 
@@ -63,13 +63,13 @@ The following tools and libraries are provided:
 This is the basic "code" class. It contains the following 
 functions:
 
-`ldpc.code(standard, rate, z, ptype)` initialises an ldpc object.
-`standard` is a string '802.11n' or '802.16'
-`rate` is a string (!!!) '1/2', '2/3', '3/4', '5/6'
-`z` is a number >= 3
+`ldpc.code(standard, rate, z, ptype)` initialises an ldpc object.  
+`standard` is a string '802.11n' or '802.16'  
+`rate` is a string (!!!) '1/2', '2/3', '3/4', '5/6'  
+`z` is a number >= 3  
 `ptype` is 'A' or 'B' (only needed for 802.16, rate 2/3 or 3/4)
 
-The initialiser can be called for example as `c = ldpc.code()`
+The initialiser can be called for example as `c = ldpc.code()`  
 (we will use "c" as the object name in the function descriptions below)
 
 `c.pcmat()` returns the binary parity-check matrix 
@@ -85,8 +85,8 @@ The initialiser can be called for example as `c = ldpc.code()`
   'sumprod2' has an improved check node processing in the log domain 
   and is hence numerically more stable (and equivalent to sumprod)
   'minsum' is the min-sum algorithm. This algorithm can take an optional
-   "correction factor" as an argument that can improve its performance. 
-  WARNING: minsum currently NOT working, work in progress.
+   "correction factor" as an argument that can improve its performance.   
+  WARNING: minsum currently NOT working, work in progress.  
   NOTE: the python function is a wrapper for underlying C functions. You
     MUST compiles these using the first `gcc` instruction above before
     importing `py/ldpc.py`
@@ -100,32 +100,33 @@ You can access code parameters using `c.K` (info length), `c.N` (codeword
   finally `c.proto` (protograph)
 
 ### Example command-line use of `py/ldpc.py`:
+
 NOTE: in current python version, a subdirectory must contain an empty
 file `__init.py__` in order to be able to load a library from it in
 command-line mode, whereas the opposite is true when not operating in 
 command line mode. In the steps below, we write this file the delete it.
 
 `$ cd ldpc  
-$ echo " " > py/__init__.py`  
-`$ python`  
-`>>> import py.ldpc as ldpc'`  
-`>>> import numpy as np`  
-`>>> c = ldpc.code()`  
-`>>> c.standard`  
-`'802.11n'`  
-`>>> u = np.random.randint(0,2,c.K)`  
-`>>> x = c.encode(u)`  
-`>>> np.mod(np.matmul(x,np.transpose(c.pcmat())), 2)`  
-`array([0, 0, ..., 0])`  
-`>>> y = 10*(.5-x)`  
-`>>> app,it = c.decode(y)`  
-`>>> it`  
-`0`  
-`>>> np.nonzero((app<0) != x)`  
-`(array([], dtype=int64),)`  
-`>>> exit()`  
-`$ rm py/__init__.py`  
-
+$ echo " " > py/__init__.py  
+$ python  
+>>> import py.ldpc as ldpc'  
+>>> import numpy as np  
+>>> c = ldpc.code()  
+>>> c.standard  
+'802.11n'  
+>>> u = np.random.randint(0,2,c.K)  
+>>> x = c.encode(u)  
+>>> np.mod(np.matmul(x,np.transpose(c.pcmat())), 2)  
+array([0, 0, ..., 0])  
+>>> y = 10*(.5-x)  
+>>> app,it = c.decode(y)  
+>>> it  
+0  
+>>> np.nonzero((app<0) != x)  
+(array([], dtype=int64),)  
+>>> exit()  
+$ rm py/__init__.py  
+`
 
 ### `py/test_ldpc.py`
 
@@ -139,22 +140,23 @@ against existing published performance graphs.
 ### `py/ldpc_awgn.py`
 
 Runs a measurement campaign for LDPC codes on Additive White Gaussian
-Noise (AWGN) channels. Usage:
-python py/ldpc_awgn sim_id
-where sim_id is a number between 1 and 36 determining the parameters
+Noise (AWGN) channels. Usage:  
+`python py/ldpc_awgn sim_id`  
+where `sim_id` is a number between 1 and 36 determining the parameters
 of the simulation (this was designed to work on a computer grid engine
 that can run such commands in parallel with paramters 1-36). View the
 file ldpc_awgn.py to see the list of parameters corresponding to sim_id
-(e.g. sim_id = 7 is 802.16, rate 1/2, z=27)
+(e.g. `sim_id = 7` is 802.16, rate 1/2, z=27)
 
-Writes all results into a file called data/results.txt
+Writes all results into a file called `data/results.txt`  
+
 A separate C programme (bin/results2csv) can be used to 
 parse this file and convert it to CSV format. Finally,
-a further python script py/disp_res.py extracts the results
+a further python script `py/disp_res.py` extracts the results
 from the file, sorts them back by parameters, and displays
-a series of performance graphs. 
+a series of performance graphs (see below).
 
-The directory is pre-loaded with a file results.txt from a 
+The directory `data/` is pre-loaded with a file `results.txt` from a 
 measurement campaign conducted in September 2018. Running
 such campaigns requires considerable computing power and
 could take months on a single computer. 
@@ -173,7 +175,8 @@ a directory path, e.g., `/home/user/me/ldpc/data/myresults`
 
 Calling `python py/disp_results.py` without arguments will display
 all results as python figures and wait until you've closed all
-the corresponding windies. 
-Calling python py/disp_results filename.pdf will save the graphs
+the corresponding windies.
+
+Calling `python py/disp_results filename.pdf` will save the graphs
 to the specified PDF file. 
 
