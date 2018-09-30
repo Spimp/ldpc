@@ -5,8 +5,7 @@ defined in the IEEE 802.11n and 802.16 families of standards.
 
 Written by Jossy 2018
 
-BACKGROUND INFO ON IEEE LDPC CODES
-==================================
+# Background info on IEEE LDPC codes
 
 A basic knowledge of the codes in the standards is helpful:
 the codes are designed via a protograph matrix.
@@ -29,8 +28,7 @@ each rate that can be used with any choice of z (from z=3 upwards.)
 The advantage of the IEEE 802.11n and 802.16 codes is that they
 have very efficient encoders. 
 
-PACKAGE REQUIREMENTS
-====================
+# Package requirements
 
 The package is written for Python 3 and decoding functions are in C.
 It's been tested on linux (CUED teaching system in DPO) and Mac OSX
@@ -58,8 +56,7 @@ gcc -o bin/results2csv src/results2csv.c
 
 (the first of these needs to be done before decoders can be used!!)
 
-PACKAGE DESCRIPTION AND USAGE
-=============================
+# Package description and usage
 
 The following tools and libraries are provided:
 
@@ -100,7 +97,7 @@ The initialiser can be called for example as c = ldpc.code()
   of IEEE standard), c.ptype (code type for 802.16 rate 2/3 and 3/4), and
   finally c.proto (protograph)
 
-Example command-line use of this library:
+## Example command-line use of this library:
 NOTE: in current python version, a subdirectory must contain an empty
 file __init.py__ in order to be able to load a library from it in
 command-line mode, whereas the opposite is true when not operating in 
