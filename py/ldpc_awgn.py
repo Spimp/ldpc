@@ -57,7 +57,7 @@ def bpsk(x):
 
 
 
-def sim(standard, rate, z, ptype="A"):
+def sim(standard, rate, z, ptype="A", N_MEASUREMENTS=24, C_AWGN_OFFSET=1.0, P_STEP=100.0):
 
     if rate == "1/2":
         R = .5
@@ -72,16 +72,13 @@ def sim(standard, rate, z, ptype="A"):
 
     # start 1 dB above the SNR corresponding to AWGN rate
     # (which is above capacity since this is a BiAWGN)
-    SNR = 10.0*np.log10(np.power(2,R)-1.0) + 1.0
+    SNR = 10.0*np.log10(np.power(2,R)-1.0) + C_AWGN_OFFSET
 
     mycode = ldpc.code(standard, rate, z, ptype)
     K = mycode.K
 
     res = []
 
-    # number of EbNo points measured
-    N_MEASUREMENTS = 24
-    
     for datapoint in range(N_MEASUREMENTS): 
         nbiterrors = 0
         nblockerrors = 0
@@ -114,7 +111,7 @@ def sim(standard, rate, z, ptype="A"):
         f.write(str(output))
         f.write("\n")
         f.close()
-        SNR += np.sqrt(100.0/nblocks)
+        SNR += np.sqrt(P_STEP/nblocks)
             
 if __name__ == "__main__":
     if len(sys.argv) > 1: # args numbered 1 to 36 (better for grid engine calls
