@@ -42,8 +42,7 @@ testing functions, you need to install pytest (recommended approach
 is to install anaconda, an package environment manager, then type
 "conda install pytest"). Again, make sure pytest is using Python 3. 
 
-PACKAGE CONTENTS AND PREPARATION
-================================
+# Package contents and preparation
 
 C code is in subdirectory src/
 C executables are in subdirectory bin/
@@ -97,7 +96,7 @@ The initialiser can be called for example as c = ldpc.code()
   of IEEE standard), c.ptype (code type for 802.16 rate 2/3 and 3/4), and
   finally c.proto (protograph)
 
-## Example command-line use of this library:
+# Example command-line use of this library:
 NOTE: in current python version, a subdirectory must contain an empty
 file __init.py__ in order to be able to load a library from it in
 command-line mode, whereas the opposite is true when not operating in 
@@ -107,20 +106,20 @@ command line mode. In the steps below, we write this file the delete it.
 cd ldpc
 echo " " > py/__init__.py
 python
->>> import py.ldpc as ldpc
->>> import numpy as np
->>> c = ldpc.code()
->>> c.standard
+\>>> import py.ldpc as ldpc
+import numpy as np
+c = ldpc.code()
+c.standard
 '802.11n'
->>> u = np.random.randint(0,2,c.K)
->>> x = c.encode(u)
->>> np.mod(np.matmul(x,np.transpose(c.pcmat())), 2)
+u = np.random.randint(0,2,c.K)
+x = c.encode(u)
+np.mod(np.matmul(x,np.transpose(c.pcmat())), 2)
 array([0, 0, ..., 0])
->>> y = 10*(.5-x)
->>> app,it = c.decode(y)
->>> it
+y = 10*(.5-x)
+app,it = c.decode(y)
+it
 0
->>> np.nonzero((app<0) != x)
+np.nonzero((app<0) != x)
 (array([], dtype=int64),)
 rm py/__init__.py
 
