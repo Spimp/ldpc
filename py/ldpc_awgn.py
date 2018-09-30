@@ -57,7 +57,7 @@ def bpsk(x):
 
 
 
-def sim(standard, rate, z, ptype="A", N_MEASUREMENTS=24, C_AWGN_OFFSET=1.0, P_STEP=100.0,
+def sim(standard, rate, z, ptype='A', N_MEASUREMENTS=24, C_AWGN_OFFSET=1.0, P_STEP=100.0,
         MIN_ERRORS = 100, MAX_BLOCKS = 400000):
 
     if rate == "1/2":
