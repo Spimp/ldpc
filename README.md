@@ -5,7 +5,7 @@ defined in the IEEE 802.11n and 802.16 families of standards.
 
 Written by Jossy 2018
 
-# Background info on IEEE LDPC codes
+## Background info on IEEE LDPC codes
 
 A basic knowledge of the codes in the standards is helpful:
 the codes are designed via a protograph matrix.
@@ -28,7 +28,7 @@ each rate that can be used with any choice of z (from z=3 upwards.)
 The advantage of the IEEE 802.11n and 802.16 codes is that they
 have very efficient encoders. 
 
-# Package requirements
+## Requirements
 
 The package is written for Python 3 and decoding functions are in C.
 It's been tested on linux (CUED teaching system in DPO) and Mac OSX
@@ -42,7 +42,7 @@ testing functions, you need to install pytest (recommended approach
 is to install anaconda, an package environment manager, then type
 "conda install pytest"). Again, make sure pytest is using Python 3. 
 
-# Package contents and preparation
+## Contents and preparation
 
 C code is in subdirectory src/
 C executables are in subdirectory bin/
@@ -55,29 +55,29 @@ gcc -o bin/results2csv src/results2csv.c
 
 (the first of these needs to be done before decoders can be used!!)
 
-# Package description and usage
+## Description and usage
 
 The following tools and libraries are provided:
 
-=========> py/ldpc.py
+'py/ldpc.py'
 This is the basic "code" class. It contains the following 
 functions:
 
-==> ldpc.code(standard, rate, z, type) initialises an ldpc object.
-standard is a string '802.11n' or '802.16'
-rate is a string (!!!) '1/2', '2/3', '3/4', '5/6'
-z is a number >= 3
-type is 'A' or 'B' (only needed for 802.16, rate 2/3 or 3/4)
+'ldpc.code(standard, rate, z, ptype)' initialises an ldpc object.
+'standard' is a string '802.11n' or '802.16'
+'rate' is a string (!!!) '1/2', '2/3', '3/4', '5/6'
+'z' is a number >= 3
+'ptype' is 'A' or 'B' (only needed for 802.16, rate 2/3 or 3/4)
 
-The initialiser can be called for example as c = ldpc.code()
+The initialiser can be called for example as 'c = ldpc.code()'
 (we will use "c" as the object name in the function descriptions below)
 
-==> c.pcmat() returns the binary parity-check matrix 
+'c.pcmat()' returns the binary parity-check matrix 
 
-==> x = c.encode(u) encodes the information vector u using an efficient
+'x = c.encode(u)' encodes the information vector u using an efficient
   encoder specialised to the IEEE standards families of LDPC codes.
 
-==> app,it = c.decode(y, dectype, corrfactor) decodes the channel
+'app,it = c.decode(y, dectype, corrfactor)' decodes the channel
   observation vector y to yield a-posteriori L-values app and a number
   of iterations it (at most 200, dynamically stopped using a stopping
   criterion.) dectype is either 'sumprod', 'sumprod2' or 'minsum'.
@@ -88,30 +88,26 @@ The initialiser can be called for example as c = ldpc.code()
    "correction factor" as an argument that can improve its performance. 
   WARNING: minsum currently NOT working, work in progress.
 
-==> you can access code parameters using c.K (info length), c.N (codeword
-  length), c.Nv (number of variable nodes, = c.N), c.Nc (number of
-  constraint nodes), c.Nmsg (number of messages), c.vdeg (variable node
-  degrees), c.cdeg (constraint node degrees), c.intrlv (code interleaver),
-  c.standard (IEEE standard), c.rate (code rate string), c.z (z parameter
-  of IEEE standard), c.ptype (code type for 802.16 rate 2/3 and 3/4), and
-  finally c.proto (protograph)
+You can access code parameters using 'c.K' (info length), 'c.N' (codeword
+  length), 'c.Nv' (number of variable nodes, '= c.N'), 'c.Nc' (number of
+  constraint nodes), 'c.Nmsg' (number of messages), 'c.vdeg' (variable node
+  degrees), 'c.cdeg' (constraint node degrees), 'c.intrlv' (code interleaver),
+  'c.standard' (IEEE standard), 'c.rate' (code rate string), 'c.z' (z parameter
+  of IEEE standard), 'c.ptype' (code type for 802.16 rate 2/3 and 3/4), and
+  finally 'c.proto' (protograph)
 
-# Example command-line use of this library:
+### Example command-line use of this library:
 NOTE: in current python version, a subdirectory must contain an empty
-file __init.py__ in order to be able to load a library from it in
+file '__init.py__' in order to be able to load a library from it in
 command-line mode, whereas the opposite is true when not operating in 
 command line mode. In the steps below, we write this file the delete it.
 
-cd ldpc
-
-echo " " > py/__init__.py
-python
-
-\>>> import py.ldpc as ldpc
-
-import numpy as np
-
-c = ldpc.code()
+'cd ldpc'
+'echo " " > py/__init__.py'
+'python'
+'>>> import py.ldpc as ldpc'
+'>>> import numpy as np
+c = ldpc.code()'
 
 c.standard
 
