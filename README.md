@@ -50,8 +50,8 @@ Python scripts classes and functions are in subdirectory `py/`
 Results and data are in subdirectory `data/`
 
 Compile the C code before first use:  
-`gcc -lm -shared -fPIC -o bin/c_ldpc.so src/c_ldpc.c  
-gcc -o bin/results2csv src/results2csv.c`
+`gcc -lm -shared -fPIC -o bin/c_ldpc.so src/c_ldpc.c`  
+`gcc -o bin/results2csv src/results2csv.c`
 
 (the first of these needs to be done before decoders can be used!!)
 
@@ -106,27 +106,26 @@ file `__init.py__` in order to be able to load a library from it in
 command-line mode, whereas the opposite is true when not operating in 
 command line mode. In the steps below, we write this file the delete it.
 
-`$ cd ldpc  
-$ echo " " > py/__init__.py  
-$ python  
->>> import py.ldpc as ldpc'  
->>> import numpy as np  
->>> c = ldpc.code()  
->>> c.standard  
-'802.11n'  
->>> u = np.random.randint(0,2,c.K)  
->>> x = c.encode(u)  
->>> np.mod(np.matmul(x,np.transpose(c.pcmat())), 2)  
-array([0, 0, ..., 0])  
->>> y = 10*(.5-x)  
->>> app,it = c.decode(y)  
->>> it  
-0  
->>> np.nonzero((app<0) != x)  
-(array([], dtype=int64),)  
->>> exit()  
-$ rm py/__init__.py  
-`
+`$ cd ldpc`  
+`$ echo " " > py/__init__.py`  
+`$ python`  
+`>>> import py.ldpc as ldpc`  
+`>>> import numpy as np`  
+`>>> c = ldpc.code()`  
+`>>> c.standard`  
+`'802.11n'`  
+`>>> u = np.random.randint(0,2,c.K)`  
+`>>> x = c.encode(u)`  
+`>>> np.mod(np.matmul(x,np.transpose(c.pcmat())), 2)`  
+`array([0, 0, ..., 0])`  
+`>>> y = 10*(.5-x)`  
+`>>> app,it = c.decode(y)`  
+`>>> it`  
+`0`  
+`>>> np.nonzero((app<0) != x)`  
+`(array([], dtype=int64),)`  
+`>>> exit()`  
+`$ rm py/__init__.py`  
 
 ### `py/test_ldpc.py`
 
